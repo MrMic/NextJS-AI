@@ -1,5 +1,5 @@
-import { streamText } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
 
 export async function POST(request: Request) {
   try {
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { prompt } = await request.json();
 
     const result = streamText({
-      model: openai("gpt-4.1-nano"),
+      model: openai('gpt-4.1-nano'),
       prompt: prompt,
     });
 
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // Stream the response as a UI message stream
     return result.toUIMessageStreamResponse();
   } catch (error) {
-    console.error("Error streaming text:", error);
-    return new Response("Failed to stream text", { status: 500 });
+    console.error('Error streaming text:', error);
+    return new Response('Failed to stream text', { status: 500 });
   }
 }
