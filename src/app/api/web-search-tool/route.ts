@@ -21,13 +21,16 @@ export async function POST(request: Request) {
 
 		const result = streamText({
 			model: openai.responses("gpt-4.1-nano"),
+			// model: openai.responses("gpt-4.1-mini"),
 			messages: convertToModelMessages(messages),
 			tools,
 			stopWhen: stepCountIs(2),
 		});
 
 		// Stream the response as a UI message stream
-		return result.toUIMessageStreamResponse();
+		return result.toUIMessageStreamResponse({
+			sendSources: true,
+		});
 	} catch (error) {
 		console.error("Error streaming chat completion:", error);
 		return new Response("Failed to stream chat completion", { status: 500 });
